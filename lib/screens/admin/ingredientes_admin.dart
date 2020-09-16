@@ -3,11 +3,13 @@ import 'package:cfhc/controllers/components_ctrl.dart';
 import 'package:cfhc/controllers/ingredientes_ctrl.dart';
 import 'package:cfhc/models/alergia.dart';
 import 'package:cfhc/models/components.dart';
+import 'package:cfhc/models/ingredientes.dart';
 import 'package:cfhc/models/producto.dart';
 import 'package:cfhc/partials/dialogs.dart';
 import 'package:cfhc/partials/left_nav.dart';
 import 'package:cfhc/providers/componentes_provider.dart';
 import 'package:cfhc/providers/encuesta_provider.dart';
+import 'package:cfhc/providers/ingredientes_provider.dart';
 import 'package:cfhc/providers/producto_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -43,7 +45,6 @@ class _IngredientesAdminState extends State<IngredientesAdmin> {
     list.clear();
     comp.forEach((componentes) {
       int index = componentes.id;
-      print(index);
       dropDownItemsMap[index] = alergia;
       list.add(new DropdownMenuItem(
         child: Text(componentes.nombre),
@@ -65,6 +66,33 @@ class _IngredientesAdminState extends State<IngredientesAdmin> {
       );
     });
     return list2;
+  }
+
+  List<TableRow> getIngredientes(List<Ingredientes> ingredientes){ // poner la lista que esta arriba devuelve list
+    List<TableRow> tableRows = List<TableRow>();
+    ingredientes.forEach((e) { 
+      tableRows.add(
+        TableRow(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(width: 1.0, color: Colors.grey[400]),
+            ),
+          ),
+          children: [
+            Text(""+e.producto+" > "+e.componente),
+            IconButton(
+              icon: Icon(Icons.edit,color: Colors.orange[400]),
+              onPressed: () { /*showUpdDialog(context,e.id, e.nombre);*/ }
+            ),
+            IconButton(
+              icon: Icon(Icons.delete,color: Colors.red[400]),
+              onPressed: () { /*showAlertDialog(context,e.id);*/ }
+            )
+        ]),
+      );
+    });
+
+    return tableRows;
   }
 
   @override
@@ -224,6 +252,43 @@ class _IngredientesAdminState extends State<IngredientesAdmin> {
               ),
             
             ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 20), 
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Selector<IngredientesProvider,List<Ingredientes>>(
+                    selector: (context, model) => model.ingredientes,
+                    builder: (context, cats, widget) => Column(
+                      children: <Widget>[
+                        if (cats.length > 0) ...[
+                          Table(
+                            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                            columnWidths: {                  
+                              0: FlexColumnWidth(1),
+                              1: FixedColumnWidth(40),
+                              2: FixedColumnWidth(40),
+                            },
+                            children: 
+                              getIngredientes(cats)
+                          )
+                        ] else ...[
+                          Center(
+                            child: SizedBox(
+                              height: 30,
+                              width: 30,
+                              child: CircularProgressIndicator(),
+                            ),
+                          )
+                        ]
+                      ]
+                    ),
+                  ), 
+                ]
+              ) 
+            )
           ],
         )
       )
@@ -300,7 +365,6 @@ class _IngredientesAdminState extends State<IngredientesAdmin> {
             }
           });
         }
-        //Navigator.of(context).pop();
       },
     );
     // set up the AlertDialog

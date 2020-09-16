@@ -2,6 +2,7 @@ import 'package:cfhc/providers/auth_provider.dart';
 import 'package:cfhc/providers/bar_provider.dart';
 import 'package:cfhc/providers/componentes_provider.dart';
 import 'package:cfhc/providers/encuesta_provider.dart';
+import 'package:cfhc/providers/ingredientes_provider.dart';
 import 'package:cfhc/providers/pedido_provider.dart';
 import 'package:cfhc/providers/producto_provider.dart';
 import 'package:cfhc/screens/admin/alergias_admin.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<EncuestaProvider>(create: (context) => EncuestaProvider()),
         ChangeNotifierProvider<ComponenteProvider>(create: (context) => ComponenteProvider()),
         ChangeNotifierProvider<ProductoProvider>(create: (context) => ProductoProvider()),
+        ChangeNotifierProvider<IngredientesProvider>(create: (context) => IngredientesProvider()),
         //StreamProvider<ConnectivityStatus>(create: (context) => ConnectivityService().connectionStatusController)
       ],
       child: MaterialApp(

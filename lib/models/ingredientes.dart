@@ -3,15 +3,15 @@ class Ingredientes{
   int idcomponente;
   String producto;
   String componente;
-  String nombre;
-  int id;
 
-  Ingredientes({this.id, this.nombre});
+  Ingredientes({this.idcomponente, this.componente, this.producto, this.idproducto});
 
   factory Ingredientes.fromJson(Map<String, dynamic> json) {
     return Ingredientes(
-      id: json['id'],
-      nombre: json['nombre'],
+      idproducto: json['id_producto'],
+      idcomponente: json['id_componente'],
+      producto: json['producto'],
+      componente: json['componente']
     );
   }
 }

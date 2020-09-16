@@ -2,6 +2,7 @@ import 'package:cfhc/models/usuario.dart';
 import 'package:cfhc/providers/auth_provider.dart';
 import 'package:cfhc/providers/componentes_provider.dart';
 import 'package:cfhc/providers/encuesta_provider.dart';
+import 'package:cfhc/providers/ingredientes_provider.dart';
 import 'package:cfhc/providers/producto_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,7 @@ class LeftNav {
     EncuestaProvider encuestaProv = Provider.of<EncuestaProvider>(context);
     ComponenteProvider componentProv = Provider.of<ComponenteProvider>(context);
     ProductoProvider productoProv = Provider.of<ProductoProvider>(context);
+    IngredientesProvider ingredientesProv = Provider.of<IngredientesProvider>(context);
     Usuario usuario = authProv.getUsuario();
     return Drawer(
       child: ListView(
@@ -83,6 +85,7 @@ class LeftNav {
             onTap: () {
               componentProv.listarComponentes();
               productoProv.listarProductos();
+              ingredientesProv.listarIngredientes();
               Navigator.of(context).pushReplacementNamed('/registrar_ingredientes');
             },
           ),

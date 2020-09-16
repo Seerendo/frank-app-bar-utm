@@ -110,6 +110,7 @@ class _AlergiasState extends State<Alergias> {
                                       items: getSelectOptions(alergias),
                                       onChanged: (selected) {
                                         _selectedItem = dropDownItemsMap[selected];
+                                        print(_selectedItem);
                                         setState(() {
                                           _selectedItem = dropDownItemsMap[selected];
                                         });
