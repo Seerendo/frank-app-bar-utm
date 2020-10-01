@@ -10,6 +10,7 @@ import 'package:cfhc/screens/admin/categorias_alimentos_admin.dart';
 import 'package:cfhc/screens/admin/componentes_admin.dart';
 import 'package:cfhc/screens/admin/enfermedades_admin.dart';
 import 'package:cfhc/screens/admin/ingredientes_admin.dart';
+import 'package:cfhc/screens/admin/restricciones_admin.dart';
 
 import 'package:cfhc/screens/encuesta/alergias.dart';
 import 'package:cfhc/screens/encuesta/enfermedades.dart';
@@ -104,7 +105,9 @@ class MyApp extends StatelessWidget {
           '/registro_categoria_alimento' : (context) => ProductosBar(),
 
           '/registrar_componentes' : (context) => ComponentesAdmin(),
-          '/registrar_ingredientes' : (context) => IngredientesAdmin()
+          '/registrar_ingredientes' : (context) => IngredientesAdmin(),
+
+          '/restricciones' : (context) => RestriccionesAdmin(),
         }, 
       ),
     );

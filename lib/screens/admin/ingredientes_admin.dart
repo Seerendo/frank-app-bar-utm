@@ -44,8 +44,9 @@ class _IngredientesAdminState extends State<IngredientesAdmin> {
     dropDownItemsMap = new Map();
     list.clear();
     comp.forEach((componentes) {
+      print(componentes.id);
       int index = componentes.id;
-      dropDownItemsMap[index] = alergia;
+      dropDownItemsMap[index] = componentes;
       list.add(new DropdownMenuItem(
         child: Text(componentes.nombre),
         value: componentes.id)
@@ -58,8 +59,9 @@ class _IngredientesAdminState extends State<IngredientesAdmin> {
     dropDownItemsMap2 = new Map();
     list2.clear();
     prod.forEach((productos) {
+      print(productos.id);
       int index = productos.id;
-      dropDownItemsMap2[index] = alergia;
+      dropDownItemsMap2[index] = productos;
       list2.add(new DropdownMenuItem(
         child: Text(productos.nombre),
         value: productos.id)
@@ -141,14 +143,13 @@ class _IngredientesAdminState extends State<IngredientesAdmin> {
                                       isExpanded: true,
                                       items: getSelectOptions2(productos),
                                       onChanged: (selected) {
-                                        print(dropDownItemsMap[selected]);
-                                        _selectedItem2 = dropDownItemsMap[selected];
+                                        _selectedItem2 = dropDownItemsMap2[selected];
                                         setState(() {
-                                          _selectedItem2 = dropDownItemsMap[selected];
+                                          _selectedItem2 = dropDownItemsMap2[selected];
                                         });
                                       },
                                       hint: new Text(
-                                        _selectedItem2 != null ? _selectedItem.nombre: "Productos",
+                                        _selectedItem2 != null ? _selectedItem2.nombre: "Productos",
                                       ),
                                     ),
                                   )
@@ -200,9 +201,9 @@ class _IngredientesAdminState extends State<IngredientesAdmin> {
                                       isExpanded: true,
                                       items: getSelectOptions(componentes),
                                       onChanged: (selected) {
-                                        _selectedItem = dropDownItemsMap2[selected];
+                                        _selectedItem = dropDownItemsMap[selected];
                                         setState(() {
-                                          _selectedItem = dropDownItemsMap2[selected];
+                                          _selectedItem = dropDownItemsMap[selected];
                                         });
                                       },
                                       hint: new Text(

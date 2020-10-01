@@ -127,25 +127,6 @@ class _RegisterFormState extends State<RegisterForm> {
               ), 
             ],
           ),
-          /* TextFormField(
-            keyboardType: TextInputType.number,
-            inputFormatters: <TextInputFormatter>[
-              WhitelistingTextInputFormatter.digitsOnly
-            ], 
-            decoration: const InputDecoration(
-              labelText: 'Cedula',
-            ),
-            validator: (String value) {
-              if (value.trim().isEmpty) {
-                return 'No ha ingresado este campo';
-              }
-            },
-            onSaved: (value){
-              setState(() {
-                _usuario.cedula = value;
-              });
-            },
-          ), */
           SizedBox(height: 5,),
           TextFormField(
             style: TextStyle(fontSize: 18),

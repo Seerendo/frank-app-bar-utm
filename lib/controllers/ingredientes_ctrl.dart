@@ -49,6 +49,7 @@ class IngredientesCtrl{
     if (response.statusCode == 200) {
       print(response.body);
       final parsed = json.decode(response.body).cast<String, dynamic>();
+      print("object");
       return parsed["data"].map<Ingredientes>((json) => Ingredientes.fromJson(json)).toList();
     }
     return null;

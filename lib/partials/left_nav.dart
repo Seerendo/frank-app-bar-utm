@@ -89,6 +89,17 @@ class LeftNav {
               Navigator.of(context).pushReplacementNamed('/registrar_ingredientes');
             },
           ),
+          ListTile(
+            leading: Icon(Icons.store),
+            title: Text('Admin Restricciones'),
+            onTap: () {
+              componentProv.listarComponentes();
+              encuestaProv.listarAlergias();
+              encuestaProv.listarEnfermedades();
+              encuestaProv.listarEstilosVida();
+              Navigator.of(context).pushReplacementNamed('/restricciones');
+            },
+          ),
           if (usuario != null && usuario.tipo == "Operario de Bar") ... [
             SizedBox(
               height: 5,
