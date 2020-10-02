@@ -56,6 +56,7 @@ class _RestriccionesAdminState extends State<RestriccionesAdmin> {
   List<DropdownMenuItem> listCausante = List<DropdownMenuItem>();
   Map dropDownItemsMapCausante;
   String causante = 'Causante';
+  String restriccion = 'Restriccion';
 
   GlobalKey _keyLoader = new GlobalKey();
 
@@ -280,7 +281,7 @@ class _RestriccionesAdminState extends State<RestriccionesAdmin> {
                                 children: <Widget>[
                                   if (alergias.length > 0) ...[
                                     if(enfermedades.length > 0) ...[
-                                      
+                                                                           
                                         Container(
                                           padding: EdgeInsets.fromLTRB(15, 0, 10, 0),
                                           decoration: BoxDecoration(
@@ -312,61 +313,137 @@ class _RestriccionesAdminState extends State<RestriccionesAdmin> {
                                               hint: textoUno(causante, _selectedAlergias, _selectedEnfermedades, _selectedEstilo),
                                             ),
                                           ),
-                                        )
-                                      
+                                        )                              
                                     ]
-                                  ]
+                                  ],
                                 ],
                               ),
                             ),
                           ),
                         ),
                       ),  
-                    
+                
                   ],
                 ),
-              ),
-            
+              ),           
+            ),
+
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 20, 20, 10), 
+              child: Form(
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+
+                    Text('Restriccion', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+                    SizedBox(width: 5,),
+                    Expanded(
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              isExpanded: true,
+                              items: <String>['Componentes', 'Categoria Alimento']
+                              .map<DropdownMenuItem<String>>((String value){
+                                return DropdownMenuItem<String>(
+                                  child: Text(value),
+                                  value: value,
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                restriccion = value;
+                                setState(() {
+                                  restriccion = value;
+                                });
+                              },
+                              hint: new Text(restriccion),
+                            ),
+                          ),
+                        ),
+                      ),                    
+                  ],
+                ),
+              ),           
+            ),
+
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 20, 20, 10), 
+              child: Form(
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+
+                    Expanded(
+                        child: Selector<EncuestaProvider, List<Alergia>>(
+                          selector: (context, model) => model.alergias,
+                          builder: (context, alergias, widget) => 
+                          Selector<EncuestaProvider, List<Enfermedad>>(
+                            selector: (context, model) => model.enfermedades,
+                            builder: (context, enfermedades, widget) =>
+                            Selector<EncuestaProvider, List<EstiloVida>>(
+                              selector: (context, model) => model.estilosVida,
+                              builder: (context, estilosVida, widget) => Column(
+                                children: <Widget>[
+                                  if (alergias.length > 0) ...[
+                                    if(enfermedades.length > 0) ...[
+                                                                           
+                                        Container(
+                                          padding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.all(Radius.circular(20))
+                                          ),
+                                          child: DropdownButtonHideUnderline(
+                                            child: DropdownButton(
+                                              isExpanded: true,                                             
+                                              items: getCausante(causante, alergias, enfermedades, estilosVida),
+                                              onChanged: (value){
+                                                if(causante == "Alergias"){
+                                                  _selectedAlergias = dropDownItemsMapAlergias[value];
+                                                  setState(() {
+                                                  _selectedAlergias = dropDownItemsMapAlergias[value];
+                                                  });
+                                                } if(causante == "Enfermedades") {
+                                                  _selectedEnfermedades = dropDownItemsMapEnfermedades[value];
+                                                  setState(() {
+                                                  _selectedEnfermedades = dropDownItemsMapEnfermedades[value];
+                                                  });
+                                                } if(causante == "Estilo de Vida"){
+                                                  _selectedEstilo = dropDownItemsMapEstilo[value];
+                                                  setState(() {
+                                                  _selectedEstilo = dropDownItemsMapEstilo[value];
+                                                  });
+                                                } else{}
+                                              },
+                                              hint: textoUno(causante, _selectedAlergias, _selectedEnfermedades, _selectedEstilo),
+                                            ),
+                                          ),
+                                        )                              
+                                    ]
+                                  ],
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),  
+                
+                  ],
+                ),
+              ),           
             ),
             
             
-            Padding(
-              padding: EdgeInsets.fromLTRB(20, 10, 20, 20), 
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Selector<IngredientesProvider,List<Ingredientes>>(
-                    selector: (context, model) => model.ingredientes,
-                    builder: (context, cats, widget) => Column(
-                      children: <Widget>[
-                        if (cats.length > 0) ...[
-                          Table(
-                            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                            columnWidths: {                  
-                              0: FlexColumnWidth(1),
-                              1: FixedColumnWidth(40),
-                              2: FixedColumnWidth(40),
-                            },
-                            children: 
-                              getIngredientes(cats)
-                          )
-                        ] else ...[
-                          Center(
-                            child: SizedBox(
-                              height: 30,
-                              width: 30,
-                              child: CircularProgressIndicator(),
-                            ),
-                          )
-                        ]
-                      ]
-                    ),
-                  ), 
-                ]
-              ) 
-            )
+            
+            
           ],
         )
       )
